@@ -39,6 +39,30 @@ Similarly to the above, one can show certain statistics using a similar method t
 }
 ```
 
+## Development
+
+Requires Node.js 18 or newer.
+
+```bash
+npm install      # install dependencies
+npm run dev      # rebuild main.js on every change
+npm test         # run the unit tests
+npm run deploy   # build and copy the plugin into a vault
+```
+
+`npm run deploy` copies `main.js`, `manifest.json` and `styles.css` into `.sandbox/.obsidian/plugins/obsidian-vault-statistics-plugin` by default. To deploy into a real vault, create an untracked `deploy.local.json` with the plugin folder of that vault (see `deploy.local.example.json`) or set the `PLUGIN_DIR` environment variable.
+
+## Releasing
+
+`main.js` is a build artifact and is never committed: releases are built and published by GitHub Actions.
+
+1. `npm version patch` (or `minor` / `major`) — bumps `package.json`, then `manifest.json` and `versions.json` through the `version` script, and creates the commit and tag.
+2. `git push --follow-tags` — pushes the commit and the tag.
+
+The tag starts `.github/workflows/release.yml`, which runs the tests, builds the plugin, verifies that the tag matches `manifest.json`, and attaches `main.js`, `manifest.json` and `styles.css` to the release. BRAT and Obsidian read the plugin from those assets.
+
+Tags must be plain `x.y.z` (no `v` prefix) so that they match the manifest version.
+
 ## Version History
 
 All notable changes to this project will be documented in this file.

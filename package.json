@@ -4,13 +4,18 @@
   "description": "Status bar item with vault statistics such as number of notes, files, attachments, and links.",
   "main": "main.js",
   "scripts": {
-    "watch": "rollup --config rollup.config.js -w --watch.onStart \"npm run test\" --watch.onEnd \"npm run deploy\"",
-    "test": "npx jest",
+    "dev": "rollup --config rollup.config.js -w",
     "build": "rollup --config rollup.config.js",
-    "deploy": "mkdir -p \"${PLUGIN_DIR:=.sandbox/.obsidian/plugins/vault-statistics-plugin}\"; cp -v manifest.json main.js styles.css \"${PLUGIN_DIR}\""
+    "test": "jest",
+    "deploy": "npm run build && node scripts/deploy.mjs",
+    "version": "node version-bump.mjs && git add manifest.json versions.json"
   },
   "keywords": [],
-  "author": "Bryan Kyle",
+  "author": "ARME",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALE-ARME/obsidian-vault-statistics-plugin.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.1.0",
